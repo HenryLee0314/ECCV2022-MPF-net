@@ -2,3 +2,12 @@ work
 tmp
 
 __pycache__
+
+
+.vscode
+
+build
+
+*.so
+
+*.png
