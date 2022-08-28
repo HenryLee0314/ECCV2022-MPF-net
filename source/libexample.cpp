@@ -2048,9 +2048,11 @@ void internel_convert_cubemap_flow_to_equirect_flow(int face, float* data)
 using namespace pybind11;
 using namespace pybind11::literals;
 
+static Equirect2Cylinder e2c;
+
 array_t<uint8_t> RGB_equirect_to_cylinder(const array_t<uint8_t>& input, const int rows, const int cols, const int channels)
 {
-    Equirect2Cylinder e2c;
+    // Equirect2Cylinder e2c;
 
     buffer_info input_buff = input.request();
 
@@ -2072,7 +2074,7 @@ array_t<uint8_t> RGB_equirect_to_cylinder(const array_t<uint8_t>& input, const i
 
 array_t<float> flow_equirect_to_cylinder(const array_t<float>& input, const int rows, const int cols, const int channels)
 {
-    Equirect2Cylinder e2c;
+    // Equirect2Cylinder e2c;
 
     buffer_info input_buff = input.request();
 
@@ -2094,7 +2096,7 @@ array_t<float> flow_equirect_to_cylinder(const array_t<float>& input, const int 
 
 array_t<uint8_t> RGB_equirect_to_cubepadding(const array_t<uint8_t>& input, const int rows, const int cols, const int channels)
 {
-    Equirect2Cylinder e2c;
+    // Equirect2Cylinder e2c;
 
     buffer_info input_buff = input.request();
 
@@ -2120,7 +2122,7 @@ array_t<uint8_t> RGB_equirect_to_cubepadding(const array_t<uint8_t>& input, cons
 
 array_t<float> flow_equirect_to_cubepadding(const array_t<float>& input, const int rows, const int cols, const int channels)
 {
-    Equirect2Cylinder e2c;
+    // Equirect2Cylinder e2c;
 
     buffer_info input_buff = input.request();
 
