@@ -1854,80 +1854,45 @@ FlowData* flow_internel_cubemap_to_equirect(float* front, float* back, float* le
             int x = coord->x;
             int y = coord->y;
 
-            // int row = y;
-            // int col = x;
+            if (x > 255) {
+                x = 255;
+            }
 
-            // float theta = 0;
-            // float phi = 0;
+            if (y > 255) {
+                y = 255;
+            }
 
-            // int height = 256;
-            // int width = 256;
+            if (x < 0) {
+                x = 0;
+            }
+
+            if (y < 0) {
+                y = 0;
+            }
 
             switch (coord->face) {
             case (CUBEMAPS_TOP) : {
                 optical_flow[j * panoWidth + i] = top_flow_data[y * 256 + x];
-                // float flow_x = top_flow_data[row * width + col].x;
-                // float flow_y = top_flow_data[row * width + col].y;
-                // float x0, y0, x1, y1;
-                // convertToRadian(CameraDirection::TOP, 2 * (float(col) / width - 0.5), 2 * (float(row) / height - 0.5), x0, y0);
-                // convertToRadian(CameraDirection::TOP, 2 * ((float(col) + flow_x) / width - 0.5), 2 * ((float(row) + flow_y) / height - 0.5), x1, y1);
-                // theta = x1-x0;
-                // phi = y1-y0;
                 break;
             }
             case (CUBEMAPS_LEFT) : {
                 optical_flow[j * panoWidth + i] = left_flow_data[y * 256 + x];
-                // float flow_x = left_flow_data[row * width + col].x;
-                // float flow_y = left_flow_data[row * width + col].y;
-                // float x0, y0, x1, y1;
-                // convertToRadian(CameraDirection::LEFT, 2 * (float(col) / width - 0.5), 2 * (float(row) / height - 0.5), x0, y0);
-                // convertToRadian(CameraDirection::LEFT, 2 * ((float(col) + flow_x) / width - 0.5), 2 * ((float(row) + flow_y) / height - 0.5), x1, y1);
-                // theta = x1-x0;
-                // phi = y1-y0;
                 break;
             }
             case (CUBEMAPS_FRONT) : {
                 optical_flow[j * panoWidth + i] = front_flow_data[y * 256 + x];
-                // float flow_x = front_flow_data[row * width + col].x;
-                // float flow_y = front_flow_data[row * width + col].y;
-                // float x0, y0, x1, y1;
-                // convertToRadian(CameraDirection::FRONT, 2 * (float(col) / width - 0.5), 2 * (float(row) / height - 0.5), x0, y0);
-                // convertToRadian(CameraDirection::FRONT, 2 * ((float(col) + flow_x) / width - 0.5), 2 * ((float(row) + flow_y) / height - 0.5), x1, y1);
-                // theta = x1-x0;
-                // phi = y1-y0;
                 break;
             }
             case (CUBEMAPS_RIGHT) : {
                 optical_flow[j * panoWidth + i] = right_flow_data[y * 256 + x];
-                // float flow_x = right_flow_data[row * width + col].x;
-                // float flow_y = right_flow_data[row * width + col].y;
-                // float x0, y0, x1, y1;
-                // convertToRadian(CameraDirection::RIGHT, 2 * (float(col) / width - 0.5), 2 * (float(row) / height - 0.5), x0, y0);
-                // convertToRadian(CameraDirection::RIGHT, 2 * ((float(col) + flow_x) / width - 0.5), 2 * ((float(row) + flow_y) / height - 0.5), x1, y1);
-                // theta = x1-x0;
-                // phi = y1-y0;
                 break;
             }
             case (CUBEMAPS_BACK) : {
                 optical_flow[j * panoWidth + i] = back_flow_data[y * 256 + x];
-                // float flow_x = back_flow_data[row * width + col].x;
-                // float flow_y = back_flow_data[row * width + col].y;
-                // float x0, y0, x1, y1;
-                // convertToRadian(CameraDirection::BACK, 2 * (float(col) / width - 0.5), 2 * (float(row) / height - 0.5), x0, y0);
-                // convertToRadian(CameraDirection::BACK, 2 * ((float(col) + flow_x) / width - 0.5), 2 * ((float(row) + flow_y) / height - 0.5), x1, y1);
-                // theta = x1-x0;
-                // phi = y1-y0;
                 break;
             }
             case (CUBEMAPS_DOWN) : {
                 optical_flow[j * panoWidth + i] = bottom_flow_data[y * 256 + x];
-                // float flow_x = bottom_flow_data[row * width + col].x;
-                // float flow_y = bottom_flow_data[row * width + col].y;
-                // float x0, y0, x1, y1;
-                // convertToRadian(CameraDirection::DOWN, 2 * (float(col) / width - 0.5), 2 * (float(row) / height - 0.5), x0, y0);
-                // convertToRadian(CameraDirection::DOWN, 2 * ((float(col) + flow_x) / width - 0.5), 2 * ((float(row) + flow_y) / height - 0.5), x1, y1);
-                // theta = x1-x0;
-                // phi = y1-y0;
                 break;
             }
             default: {
@@ -1935,13 +1900,6 @@ FlowData* flow_internel_cubemap_to_equirect(float* front, float* back, float* le
                 optical_flow[j * panoWidth + i].y = 0;
 
             }
-
-            // if (theta > 512) theta -= 1024;
-            // if (theta < -512) theta += 1024;
-
-            // optical_flow[j * panoWidth + i].x = theta;
-            // optical_flow[j * panoWidth + i].y = phi;
-
             }
         }
     }
@@ -2056,7 +2014,7 @@ array_t<uint8_t> RGB_equirect_to_cylinder(const array_t<uint8_t>& input, const i
 
     buffer_info input_buff = input.request();
 
-    CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
+    // CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
     auto result = array_t<uint8_t>(e2c.cylinder_rows * e2c.cylinder_cols * channels);
     buffer_info result_buff = result.request();
 
@@ -2078,7 +2036,7 @@ array_t<float> flow_equirect_to_cylinder(const array_t<float>& input, const int 
 
     buffer_info input_buff = input.request();
 
-    CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
+    // CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
     auto result = array_t<float>(e2c.cylinder_rows * e2c.cylinder_cols * channels);
     buffer_info result_buff = result.request();
 
@@ -2100,7 +2058,7 @@ array_t<uint8_t> RGB_equirect_to_cubepadding(const array_t<uint8_t>& input, cons
 
     buffer_info input_buff = input.request();
 
-    CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
+    // CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
     auto result = array_t<uint8_t>(256*4 * 256*4 * channels);
     buffer_info result_buff = result.request();
 
@@ -2126,7 +2084,7 @@ array_t<float> flow_equirect_to_cubepadding(const array_t<float>& input, const i
 
     buffer_info input_buff = input.request();
 
-    CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
+    // CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
     auto result = array_t<float>(256*4 * 256*4 * channels);
     buffer_info result_buff = result.request();
 
@@ -2151,7 +2109,7 @@ array_t<float> flow_cylinder_to_equirect(const array_t<float>& input, const int 
 {
     buffer_info input_buff = input.request();
 
-    CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
+    // CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
     auto result = array_t<float>(512 * 1024 * channels);
     buffer_info result_buff = result.request();
 
@@ -2182,7 +2140,7 @@ array_t<float> flow_cubemap_to_equirect(const array_t<float>& front,
     buffer_info top_buff = top.request();
     buffer_info bottom_buff = bottom.request();
 
-    CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
+    // CGRA_LOGD("rows:%d, cols:%d, channel:%d", rows, cols, channels);
     auto result = array_t<float>(512 * 1024 * channels);
     buffer_info result_buff = result.request();
 
