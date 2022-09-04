@@ -14,8 +14,8 @@ sys.path.append('..')
 
 import libexample
 
-class E2E_City100R(data.Dataset):
-    def __init__(self, root = ''):
+class MPFDataset(data.Dataset):
+    def __init__(self, root, size):
 
         flow_root_0 = join(root, 'flow')
         image_root_0 = join(root, 'image')
@@ -26,7 +26,7 @@ class E2E_City100R(data.Dataset):
         self.flow_list = []
         self.image_list = []
 
-        for index in range(139):
+        for index in range(size):
 
             if index == 0:
                 continue

@@ -40,8 +40,7 @@ from cv2 import imread
 from math import ceil
 import subprocess, shutil
 
-from datasets.fusion_city100_r import FusionCity100R
-from datasets.end_to_end_dataset import E2E_City100R
+from datasets.end_to_end_dataset import MPFDataset
 
 
 def writeFlowFile(filename,uv):
@@ -74,24 +73,45 @@ def flow_cubepadding_to_equirect(flow):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser() 
-    parser.add_argument('--testing_dataset', type=str, default="/media/yiheng/T2/__DATASET__/City_100_r", help="training dataset path")
+
+    ####### dataset parameters
+
+    parser.add_argument('--testing_dataset_path', type=str, default="/media/yiheng/T2/__DATASET__/City_100_r", help="training dataset path")
+    parser.add_argument('--testing_dataset_size', type=int, default=139, help="training dataset size")
+
+    # parser.add_argument('--testing_dataset_path', type=str, default="/media/yiheng/T2/__DATASET__/EFTs_Car100", help="training dataset path")
+    # parser.add_argument('--testing_dataset_size', type=int, default=100, help="training dataset size")
+
+    ####### model path:
+
     parser.add_argument('--E_C_fusion_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/CIty_E_C_from_Mar_6/PWC_model_best.pth.tar', help='model path')
     parser.add_argument('--E_P_fusion_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/CIty_E_P_from_Feb_26/PWC_model_best.pth.tar', help='model path')
     parser.add_argument('--C_P_fusion_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/City_C_P_from_Feb_28/PWC_model_best.pth.tar', help='model path')
+
     parser.add_argument('--equirect_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/City_E_from_Nov_17/PWC_model_best.pth.tar', help='model path')
     parser.add_argument('--cylinder_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/City_C_from_Nov_28/PWC_model_best.pth.tar', help='model path')
     parser.add_argument('--cubepadding_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/City_P_from_Feb_26/PWC_model_best.pth.tar', help='model path')
-    parser.add_argument('--enable_equirect', type=bool, default=True, help="enable equirect")
-    parser.add_argument('--enable_cylinder', type=bool, default=True, help="enable cylinder")
+
+    # parser.add_argument('--E_C_fusion_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/EFT_E_C_from_Mar_6/PWC_model_best.pth.tar', help='model path')
+    # parser.add_argument('--E_P_fusion_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/EFT_E_P_from_Feb_26/PWC_model_best.pth.tar', help='model path')
+    # parser.add_argument('--C_P_fusion_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/EFT_C_P_from_Feb_28/PWC_model_best.pth.tar', help='model path')
+
+    # parser.add_argument('--equirect_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/EFT_E_from_Nov_9/PWC_model_best.pth.tar', help='model path')
+    # parser.add_argument('--cylinder_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/EFT_C_from_Nov_26/PWC_model_best.pth.tar', help='model path')
+    # parser.add_argument('--cubepadding_model_path', type=str, default='/home/yiheng/project/ECCV2022-multi-proj-optical-flow/pretrain_models/EFT_P_from_Feb_26/PWC_model_best.pth.tar', help='model path')
+    
+    ####### model enable
+
+    parser.add_argument('--enable_equirect', type=bool, default=False, help="enable equirect")
+    parser.add_argument('--enable_cylinder', type=bool, default=False, help="enable cylinder")
     parser.add_argument('--enable_cubepadding', type=bool, default=False, help="enable cubepadding")
-    parser.add_argument('--enable_fusion_E_C', type=bool, default=True, help="enable fusion_E_C")
+    parser.add_argument('--enable_fusion_E_C', type=bool, default=False, help="enable fusion_E_C")
     parser.add_argument('--enable_fusion_E_P', type=bool, default=False, help="enable fusion_E_P")
     parser.add_argument('--enable_fusion_C_P', type=bool, default=False, help="enable fusion_C_P")
 
-
     args = parser.parse_args()
 
-    test_dataset = E2E_City100R(args.testing_dataset)
+    test_dataset = MPFDataset(args.testing_dataset_path, args.testing_dataset_size)
 
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
@@ -192,7 +212,7 @@ if __name__ == '__main__':
             u_ = cv2.resize(E_C_fusion_output[:,:,0],(W,H))
             v_ = cv2.resize(E_C_fusion_output[:,:,1],(W,H))
             E_C_fusion_output = np.dstack((u_,v_))
-            writeFlowFile("tmp/%06d"%batch_idx + '.flo', E_C_fusion_output)
+            # writeFlowFile("tmp/%06d"%batch_idx + '.flo', E_C_fusion_output)
 
         if (args.enable_fusion_E_P):
             equirect_output = equirect_output.transpose(2,0,1)

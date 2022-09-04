@@ -193,8 +193,8 @@ def calculate_great_circle_distance(input_flow, target_flow, grid):
     ret = arc.mean()
     return ret
 
-# tmp = DataGroup("tmp", "./tmp/")
-tmp = DataGroup("tmp", "/home/yiheng/project/EquirectProject/build/tmp/")
+tmp = DataGroup("tmp", "./tmp/")
+# tmp = DataGroup("tmp", "/home/yiheng/project/EquirectProject/build/tmp/")
 
 
 
