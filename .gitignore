@@ -3,11 +3,9 @@ tmp
 
 __pycache__
 
-
 .vscode
+.DS_Store
 
 build
 
 *.so
-
-*.png
