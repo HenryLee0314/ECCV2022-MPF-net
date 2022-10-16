@@ -4,7 +4,7 @@ This project is the official repository of the ECCV2022 paper: Deep 360° Optica
 
 Authors: Yiheng Li, Connelly Barnes, Kun Huang, and Fang-Lue Zhang
 
-[paper](https://arxiv.org/abs/2208.00776), [dataset](https://vuw-my.sharepoint.com/:f:/g/personal/zhangfa_staff_vuw_ac_nz/Eh6vF7Ge17hJmjiZ4L8nja8BWihQg1CVhkRWiDwHkmg0Ug?e=epeqCH)
+[paper](https://arxiv.org/abs/2208.00776), [dataset](https://vuw-my.sharepoint.com/:f:/g/personal/zhangfa_staff_vuw_ac_nz/Eh6vF7Ge17hJmjiZ4L8nja8BWihQg1CVhkRWiDwHkmg0Ug?e=epeqCH), [video](https://vimeo.com/759311280)
 
 ### Abstract 
 Optical flow computation is essential in the early stages of the video processing pipeline. This paper focuses on a less explored problem in this area, the 360° optical flow estimation using deep neural networks to support increasingly popular VR applications. To address the distortions of panoramic representations when applying convolutional neural networks, we propose a novel multi-projection fusion framework that fuses the optical flow predicted by the models trained using different projection methods. It learns to combine the complementary information in the optical flow results under different projections. We also build the first large-scale panoramic optical flow dataset to support the training of neural networks and the evaluation of panoramic optical flow estimation methods. The experimental results on our dataset demonstrate that our method outperforms the existing methods and other alternative deep networks that were developed for processing 360° content.
@@ -13,6 +13,10 @@ Optical flow computation is essential in the early stages of the video processin
 <img align="left" src="poster_and_video/poster.png">
 
 ### Video
+A video presentation is available at [Vimeo](https://vimeo.com/759311280). Please have a look.
+
+For those who can not watch the video due to network issue, we have a compressed video available at `poster_and_video/video.mp4`.
+
 <video src="poster_and_video/video.mp4" width="640px" height="360px" controls="controls"></video>
 
 ### Citation
