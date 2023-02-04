@@ -21,11 +21,13 @@ For those who can not watch the video due to network issue, we have a compressed
 
 ### Citation
 ```
-@misc{2208.00776,
-Author = {Yiheng Li and Connelly Barnes and Kun Huang and Fang-Lue Zhang},
-Title = {Deep 360$^\circ$ Optical Flow Estimation Based on Multi-Projection Fusion},
-Year = {2022},
-Eprint = {arXiv:2208.00776},
+@inproceedings{li2022deep,
+  title={Deep 360∘ Optical Flow Estimation Based on Multi-projection Fusion},
+  author={Li, Yiheng and Barnes, Connelly and Huang, Kun and Zhang, Fang-Lue},
+  booktitle={Computer Vision--ECCV 2022: 17th European Conference, Tel Aviv, Israel, October 23--27, 2022, Proceedings, Part XXXV},
+  pages={336--352},
+  year={2022},
+  organization={Springer}
 }
 ```
 
